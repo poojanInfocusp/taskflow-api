@@ -1,9 +1,9 @@
 from fastapi import FastAPI
-from config import settings
+from app.api.v1 import auth
 
-app = FastAPI()
+app = FastAPI(title="My Taskflow Api")
 
-@app.get('/')
-def home():
-    print(settings.database_url," = this is the Database URL")
-    return {"message" :  "this is home page"} 
+# Check to see if the Server is running or not
+@app.get("/is/server/running")
+def is_server_running():
+    return {"message" : "Server is running"}
