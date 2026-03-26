@@ -1,9 +1,12 @@
 from fastapi import FastAPI
-from app.api.v1 import auth
+from app.api.v1.router import router as v1_router
 
-app = FastAPI(title="My Taskflow Api")
+app = FastAPI(title="TaskFlow API")
 
-# Check to see if the Server is running or not
-@app.get("/is/server/running")
-def is_server_running():
-    return {"message" : "Server is running"}
+# Check if the server is responding or not
+@app.get('/ping')
+def ping():
+    return {"message" : "Pong"}
+
+
+app.include_router(v1_router, prefix='/api/v1')

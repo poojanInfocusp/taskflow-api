@@ -4,6 +4,7 @@ from typing import AsyncGenerator
 async def get_db()->AsyncGenerator[AsyncSession,None]:
     async with AsyncSessionLocal() as session:
         try:
+            print("DB Connection has Established")
             yield session
         except Exception:
             await session.rollback()
