@@ -11,11 +11,11 @@ uuid_pk = Annotated[UUID, mapped_column(PG_UUID(as_uuid=True), primary_key=True,
 timestamp = Annotated[datetime, mapped_column(DateTime, server_default=func.now())]
 
 class Category(Base):
-    __tablename__ = "Categories"
+    __tablename__ = "categories"
 
     id: Mapped[uuid_pk]
     
     name: Mapped[str] = mapped_column(VARCHAR(100), nullable=False, index=True)
-    owner_id: Mapped[UUID] = mapped_column(ForeignKey("Users.id"), nullable=False)
+    owner_id: Mapped[UUID] = mapped_column(ForeignKey("users.id"), nullable=False)
     
     created_at: Mapped[timestamp]

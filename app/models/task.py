@@ -14,7 +14,7 @@ uuid_pk = Annotated[
 timestamp = Annotated[datetime, mapped_column(DateTime, server_default=func.now())]
 
 class Task(Base):
-    __tablename__ = "Tasks"
+    __tablename__ = "tasks"
 
     id: Mapped[uuid_pk]
     title: Mapped[str] = mapped_column(VARCHAR(255), nullable=False)
@@ -36,9 +36,9 @@ class Task(Base):
     
     due_date: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
     
-    owner_id: Mapped[UUID] = mapped_column(ForeignKey("Users.id"), nullable=False)
+    owner_id: Mapped[UUID] = mapped_column(ForeignKey("users.id"), nullable=False)
     
-    category_id: Mapped[UUID | None] = mapped_column(ForeignKey("Categories.id"), nullable=True)
+    category_id: Mapped[UUID | None] = mapped_column(ForeignKey("categories.id"), nullable=True)
 
     created_at: Mapped[timestamp] 
     

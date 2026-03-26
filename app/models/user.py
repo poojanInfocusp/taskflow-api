@@ -12,7 +12,7 @@ uuid_pk = Annotated[UUID, mapped_column(PG_UUID(as_uuid=True),primary_key=True, 
 timestamp = Annotated[datetime, mapped_column(DateTime, server_default=func.now())]
 
 class User(Base):
-    __tablename__ = "Users"
+    __tablename__ = "users"
 
     # ID: Fixed as_uuid=True to match Mapped[UUID]
     id: Mapped[uuid_pk]
@@ -21,6 +21,7 @@ class User(Base):
     email: Mapped[str] = mapped_column(VARCHAR(255), unique=True, index=True, nullable=False)
     
     hashed_password: Mapped[str] = mapped_column(VARCHAR(255), nullable=False)
+    refresh_token: Mapped[str | None] = mapped_column(VARCHAR(512), nullable=True)
     
     full_name: Mapped[str] = mapped_column(VARCHAR(255), nullable=False)
     
