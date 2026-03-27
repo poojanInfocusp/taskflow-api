@@ -60,7 +60,8 @@ async def login(user : UserLoginRquest, db : AsyncSession, response : Response):
                 "sub" : str(myUser.id),
                 "email" : (myUser.email),
                 "exp" : (access_token_expiry),
-                "type" : "Bearer"
+                "type" : "access",
+                "role" : myUser.role
             }
         )
 
@@ -71,7 +72,8 @@ async def login(user : UserLoginRquest, db : AsyncSession, response : Response):
                 "sub" : str(myUser.id),
                 "email" : (myUser.email),
                 "exp" : (refresh_token_expiry),
-                "type" : "Bearer",
+                "type" : "refresh",
+                "role" : myUser.role
             }
         )
 
@@ -91,7 +93,7 @@ async def login(user : UserLoginRquest, db : AsyncSession, response : Response):
 
         result = UserLoginResponse(
             access_token=access_token,
-            token_type="Bearer",
+            token_type="access",
             user=myUser
         )
 

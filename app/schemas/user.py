@@ -1,9 +1,9 @@
 from pydantic import BaseModel, EmailStr, Field, ConfigDict
-from enum import Enum
+from enum import StrEnum
 from datetime import datetime
 from uuid import UUID
 
-class Role(str,Enum):
+class Role(StrEnum):
     user = "user"
     admin = "admin"
 
@@ -50,3 +50,16 @@ class UserLoginResponse(BaseModel):
     access_token : str
     token_type : str
     user : UserSchemaLogin
+
+# Access Token payload Generation Schema
+class Payload(BaseModel):
+    sub : UUID
+    email : EmailStr
+    exp: datetime
+    type : str
+    role : Role
+
+class UserInfo(BaseModel):
+    id : UUID
+    email : EmailStr
+    role : Role

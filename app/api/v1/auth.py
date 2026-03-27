@@ -4,6 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.dependencies import get_db
 from typing import Annotated
 from app.services.auth_service import create_user, login as loginUser
+from fastapi.security import OAuth2PasswordRequestForm
 
 # Dependency
 db_dependency = Annotated[AsyncSession,Depends(get_db)]
@@ -33,3 +34,20 @@ async def register_user(user_data : UserCreate, db : db_dependency):
 async def login(user : UserLoginRquest, db : db_dependency , response : Response):
     result = await loginUser(user,db,response)
     return result
+
+
+@router.post('/token')
+async def auth_token( db: db_dependency , response : Response,form_data : OAuth2PasswordRequestForm = Depends()):
+    result = await loginUser(
+        UserLoginRquest(**{
+            "email" : form_data.username,
+            "password" : form_data.password
+        }),
+        db,
+        response=response
+    )
+    return {
+        "access_token" : result.access_token,
+        "token_type" : "bearer"
+    }
+
