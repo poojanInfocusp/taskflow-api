@@ -34,3 +34,11 @@ class TaskCreateResponse(BaseModel):
     category_id : UUID | None = None
     created_at : datetime
     updated_at : datetime
+
+class TaskUpdate(BaseModel):
+    title:str | None = None
+    description : str | None = None
+    status : TaskStatus | None = None
+    priority: TaskPriority | None = None
+    due_date : datetime | None = None
+    category_id : UUID | None = None
